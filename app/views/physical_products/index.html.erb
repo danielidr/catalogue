@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Physical Products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @physical_products.each do |physical_product| %>
+      <tr>
+        <td><%= physical_product.product %></td>
+        <td><%= link_to 'Show', physical_product %></td>
+        <td><%= link_to 'Edit', edit_physical_product_path(physical_product) %></td>
+        <td><%= link_to 'Destroy', physical_product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Physical Product', new_physical_product_path %>
