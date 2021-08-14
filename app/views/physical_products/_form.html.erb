@@ -12,10 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :product_id %>
-    <%= form.text_field :product_id %>
+      <%= form.label :product %>
+      <%= form.select :product_id, options_for_select(@products), prompt: "Select product" %>
   </div>
-
+  
   <div class="field">
     <%= form.label :images %>
     <%= form.file_field :images, multiple: true %>

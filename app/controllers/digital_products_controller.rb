@@ -1,5 +1,6 @@
 class DigitalProductsController < ApplicationController
   before_action :set_digital_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :new, :create]
 
   # GET /digital_products
   # GET /digital_products.json
@@ -65,6 +66,10 @@ class DigitalProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_digital_product
       @digital_product = DigitalProduct.find(params[:id])
+    end
+
+    def set_product
+      @products = Product.pluck :name, :id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,6 @@
 class PhysicalProductsController < ApplicationController
   before_action :set_physical_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :new, :create]
 
   # GET /physical_products
   # GET /physical_products.json
@@ -65,6 +66,10 @@ class PhysicalProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_physical_product
       @physical_product = PhysicalProduct.find(params[:id])
+    end
+
+    def set_product
+      @products = Product.pluck :name, :id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
