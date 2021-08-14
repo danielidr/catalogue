@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_13_034030) do
+ActiveRecord::Schema.define(version: 2021_08_14_230912) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,22 @@ ActiveRecord::Schema.define(version: 2021_08_13_034030) do
     t.index ["product_id"], name: "index_digital_products_on_product_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "state"
+    t.float "total"
+    t.string "token"
+    t.string "paymentable_type"
+    t.integer "paymentable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paymentable_type", "paymentable_id"], name: "index_payments_on_paymentable_type_and_paymentable_id"
+  end
+
+  create_table "paypals", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "physical_products", force: :cascade do |t|
     t.integer "product_id"
     t.datetime "created_at", null: false
@@ -60,6 +76,24 @@ ActiveRecord::Schema.define(version: 2021_08_13_034030) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "stripes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transbank_methods", force: :cascade do |t|
+    t.integer "name", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transbanks", force: :cascade do |t|
+    t.integer "transbank_method_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transbank_method_id"], name: "index_transbanks_on_transbank_method_id"
   end
 
 end
