@@ -37,7 +37,7 @@
 
   <div class="field">
     <%= form.label :transbank_method %>
-    <%= form.select :name, options_for_select(@names) %>
+    <%= form.select :method_name, options_for_select(@method) , prompt: "Select method"%>
   </div>
 
   <div class="actions">

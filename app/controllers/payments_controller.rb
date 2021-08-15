@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
     before_action :set_payment, only: [:show, :edit, :update]
     before_action :set_order, only: [:edit, :new, :create]
-    before_action :set_names, only: [:edit, :new, :create]
+    before_action :set_methods, only: [:edit, :new, :create]
     
     def new
         @payment = Payment.new
@@ -21,10 +21,11 @@ class PaymentsController < ApplicationController
         elsif (p_type == "paypal")
             method = Paypal.create
         else
-            TransbankMethod.create
-            method = Transbank.create
+            name = params["payment"][:method_name]
+            trans_method = Transbank.methods[name]
+            method = Transbank.create(method: trans_method)
         end
-        puts "*****#{params["payment"][:paymentable_type].inspect}"
+        puts "*****#{params["payment"]}"
         @payment = Payment.new(payment_params)
         method.payments << @payment
 
@@ -58,8 +59,8 @@ class PaymentsController < ApplicationController
         private
         # Use callbacks to share common setup or constraints between actions.
 
-        def set_names
-            @names = TransbankMethod.names.keys
+        def set_methods
+            @method = Transbank.methods.keys
         end
 
         def set_payment
@@ -72,7 +73,6 @@ class PaymentsController < ApplicationController
     
         # Never trust parameters from the scary internet, only allow the white list through.
         def payment_params
-            params.require(:payment).permit(:token, :total, :state, :order_id, transbank_methods_attributes: [:name])
+            params.require(:payment).permit(:token, :total, :state, :order_id, transbanks_attributes: [:method])
         end
-    end
-  
+end
